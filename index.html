@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>
+UOL Analytics Professional Dashboard
+</title>
+
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<link 
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+rel="stylesheet">
+
+
+
+<style>
+
+
+*{
+box-sizing:border-box;
+}
+
+
+body{
+
+background:
+
+linear-gradient(
+135deg,
+#f8fafc,
+#eef2ff
+);
+
+
+font-family:
+
+Inter,
+Arial,
+sans-serif;
+
+
+color:#0f172a;
+
+min-height:100vh;
+
+}
+
+
+
+
+
+
+/* PROFESSIONAL WHITE CARDS */
+
+
+.card{
+
+
+background:
+
+rgba(255,255,255,.95);
+
+
+
+border:
+
+1px solid #e2e8f0;
+
+
+
+box-shadow:
+
+0 15px 35px rgba(15,23,42,.08);
+
+
+
+transition:.3s;
+
+
+}
+
+
+
+.card:hover{
+
+
+transform:
+
+translateY(-5px);
+
+
+
+box-shadow:
+
+0 25px 50px rgba(37,99,235,.18);
+
+
+
+border-color:#93c5fd;
+
+
+}
+
+
+
+
+
+
+h1,h2,h3{
+
+color:#0f172a!important;
+
+}
+
+
+
+p{
+
+color:#64748b;
+
+}
+
+
+
+
+
+
+/* KPI */
+
+
+.kpi-title{
+
+
+font-size:15px;
+
+
+font-weight:600;
+
+
+color:#64748b;
+
+
+}
+
+
+
+
+
+.kpi-value{
+
+
+font-size:42px;
+
+
+font-weight:900;
+
+
+
+background:
+
+linear-gradient(
+90deg,
+#2563eb,
+#7c3aed
+);
+
+
+
+-webkit-background-clip:text;
+
+
+color:transparent;
+
+
+}
+
+
+
+
+
+
+
+.logo-box{
+
+
+background:
+
+linear-gradient(
+135deg,
+#2563eb,
+#7c3aed
+);
+
+
+color:white;
+
+
+}
+
+
+
+
+.badge{
+
+
+background:
+
+linear-gradient(
+135deg,
+#2563eb,
+#4f46e5
+);
+
+
+color:white;
+
+
+box-shadow:
+
+0 10px 25px rgba(37,99,235,.25);
+
+
+}
+
+
+
+
+
+canvas{
+max-height:350px;
+}
+
+.card canvas{
+width:100%!important;
+}
+
+
+
+#trend{
+height:420px!important;
+}
+
+#faculty,
+#studentOrganization{
+height:450px!important;
+}
+
+
+
+
+
+
+.insight{
+
+
+background:white;
+
+
+border:
+
+1px solid #e2e8f0;
+
+
+box-shadow:
+
+0 10px 25px rgba(15,23,42,.08);
+
+
+}
+
+
+
+
+::-webkit-scrollbar{
+
+width:8px;
+
+}
+
+
+
+::-webkit-scrollbar-thumb{
+
+
+background:
+
+linear-gradient(
+#2563eb,
+#7c3aed
+);
+
+
+border-radius:20px;
+
+
+}
+
+
+
+</style>
+
+
+</head>
+
+
+
+
+
+<body class="p-10">
+
+
+
+
+
+
+
+<!-- HEADER -->
+
+
+<header class="flex justify-between items-center mb-12">
+
+
+<div class="flex items-center gap-5">
+
+
+
+<div class="logo-box w-16 h-16 rounded-2xl flex items-center justify-center">
+
+
+<i class="fa-solid fa-building-columns text-3xl"></i>
+
+
+</div>
+
+
+
+
+<div>
+
+
+<h1 class="text-5xl font-black">
+
+UOL Analytics
+
+</h1>
+
+
+
+<p class="text-lg">
+
+Performance Intelligence Dashboard
+
+</p>
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+<div class="badge px-7 py-4 rounded-2xl font-bold">
+
+
+<i class="fa-solid fa-calendar mr-2"></i>
+
+September 2026
+
+
+</div>
+
+
+
+
+</header>
+
+
+
+
+
+
+
+
+
+<!-- KPI SECTION -->
+
+
+<section class="grid xl:grid-cols-6 md:grid-cols-3 gap-6 mb-12">
+
+
+
+
+
+<div class="card rounded-3xl p-6">
+
+
+<p class="kpi-title">
+
+Total Records
+
+</p>
+
+
+<h2 class="kpi-value">
+
+46
+
+</h2>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card rounded-3xl p-6">
+
+
+<p class="kpi-title">
+
+Faculties
+
+</p>
+
+
+<h2 class="kpi-value">
+
+10
+
+</h2>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card rounded-3xl p-6">
+
+
+<p class="kpi-title">
+
+Departments
+
+</p>
+
+
+<h2 class="kpi-value">
+
+25
+
+</h2>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card rounded-3xl p-6">
+
+
+<p class="kpi-title">
+
+Activities
+
+</p>
+
+
+<h2 class="kpi-value">
+
+292
+
+</h2>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card rounded-3xl p-6">
+
+
+<p class="kpi-title">
+
+Submissions
+
+</p>
+
+
+<h2 class="kpi-value">
+
+46
+
+</h2>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card rounded-3xl p-6">
+
+
+<p class="kpi-title">
+
+Coverage
+
+</p>
+
+
+<h2 class="kpi-value">
+
+100%
+
+</h2>
+
+
+</div>
+
+
+
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- ACTIVITY ANALYTICS -->
+
+
+<h2 class="text-3xl font-bold mb-7">
+
+Activity Overview
+
+</h2>
+
+
+
+
+
+<section class="grid xl:grid-cols-3 gap-8">
+
+
+
+
+
+
+<!-- ACTIVITY -->
+
+
+<div class="card rounded-3xl p-7">
+
+
+<h3 class="text-xl font-bold mb-5">
+
+<i class="fa-solid fa-chart-pie text-blue-600 mr-2"></i>
+
+Activity Distribution
+
+</h3>
+
+
+
+<canvas id="activity"></canvas>
+
+
+</div>
+
+
+
+
+
+
+
+<!-- FACULTY -->
+
+
+<div class="card rounded-3xl p-7 xl:col-span-2">
+
+
+<h3 class="text-xl font-bold mb-5">
+
+
+<i class="fa-solid fa-ranking-star text-purple-600 mr-2"></i>
+
+Faculty Contribution Ranking
+
+</h3>
+
+
+
+<canvas id="faculty"></canvas>
+
+
+</div>
+
+
+
+
+
+
+
+<!-- STATUS -->
+
+
+<div class="card rounded-3xl p-7">
+
+
+<h3 class="text-xl font-bold mb-5">
+
+
+<i class="fa-solid fa-list-check text-green-600 mr-2"></i>
+
+Submission Status
+
+</h3>
+
+
+
+<canvas id="status"></canvas>
+
+
+</div>
+
+
+
+
+
+
+
+<!-- DEPARTMENT -->
+
+
+<div class="card rounded-3xl p-7 xl:col-span-2">
+
+
+<h3 class="text-xl font-bold mb-5">
+
+
+<i class="fa-solid fa-sitemap text-cyan-600 mr-2"></i>
+
+Department Performance
+
+</h3>
+
+
+
+<canvas id="dept"></canvas>
+
+
+</div>
+
+
+
+
+
+
+
+<!-- TREND -->
+
+
+<div class="card rounded-3xl p-7 xl:col-span-3">
+
+
+<h3 class="text-xl font-bold mb-5">
+
+
+<i class="fa-solid fa-arrow-trend-up text-yellow-600 mr-2"></i>
+
+Monthly Activity Trend
+
+</h3>
+
+
+
+<canvas id="trend"></canvas>
+
+
+</div>
+
+
+
+
+
+</section>
+
+
+<!-- ================= STUDENT ENGAGEMENT ANALYTICS ================= -->
+
+
+<section class="mt-12">
+
+
+<h2 class="text-3xl font-bold mb-7">
+
+Student Engagement Analytics
+
+</h2>
+
+
+
+
+
+<!-- STUDENT KPI -->
+
+<div class="grid xl:grid-cols-4 md:grid-cols-2 gap-6 mb-8">
+
+
+
+
+
+<div class="card rounded-3xl p-6">
+
+<p class="kpi-title">
+
+Total Students Engaged
+
+</p>
+
+
+<h2 class="kpi-value">
+
+350+
+
+</h2>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card rounded-3xl p-6">
+
+<p class="kpi-title">
+
+Internship Students
+
+</p>
+
+
+<h2 class="kpi-value">
+
+280
+
+</h2>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card rounded-3xl p-6">
+
+<p class="kpi-title">
+
+Placement Students
+
+</p>
+
+
+<h2 class="kpi-value">
+
+70
+
+</h2>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card rounded-3xl p-6">
+
+<p class="kpi-title">
+
+Partner Organizations
+
+</p>
+
+
+<h2 class="kpi-value">
+
+20+
+
+</h2>
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<!-- STUDENT CHARTS -->
+
+
+<div class="grid xl:grid-cols-2 gap-8">
+
+
+
+
+
+<div class="card rounded-3xl p-7">
+
+
+<h3 class="text-xl font-bold mb-5">
+
+
+<i class="fa-solid fa-user-graduate text-blue-600 mr-2"></i>
+
+Student Participation by Organization
+
+</h3>
+
+
+<canvas id="studentOrganization"></canvas>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card rounded-3xl p-7">
+
+
+<h3 class="text-xl font-bold mb-5">
+
+
+<i class="fa-solid fa-briefcase text-green-600 mr-2"></i>
+
+Training Mode Distribution
+
+</h3>
+
+
+<canvas id="trainingMode"></canvas>
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- ================= INTERNSHIP & PLACEMENT IMPACT ================= -->
+
+
+<section class="mt-12">
+
+
+
+<h2 class="text-3xl font-bold mb-7">
+
+Internship & Placement Impact
+
+</h2>
+
+
+
+
+
+
+<div class="card rounded-3xl p-7">
+
+
+
+<div class="grid xl:grid-cols-3 gap-6">
+
+
+
+
+
+
+<div class="insight rounded-3xl p-6">
+
+
+<div class="flex items-center gap-3">
+
+
+<div class="bg-blue-100 p-3 rounded-xl">
+
+<i class="fa-solid fa-building text-blue-600"></i>
+
+</div>
+
+
+<h3 class="font-bold">
+
+Industry Partners
+
+</h3>
+
+
+</div>
+
+
+
+<p class="text-sm mt-4">
+
+Students received practical exposure through multiple external organizations and industry partners.
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="insight rounded-3xl p-6">
+
+
+<div class="flex items-center gap-3">
+
+
+<div class="bg-green-100 p-3 rounded-xl">
+
+<i class="fa-solid fa-user-check text-green-600"></i>
+
+</div>
+
+
+<h3 class="font-bold">
+
+Career Development
+
+</h3>
+
+
+</div>
+
+
+
+<p class="text-sm mt-4">
+
+Internships and placements support professional skills and workplace readiness.
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="insight rounded-3xl p-6">
+
+
+<div class="flex items-center gap-3">
+
+
+<div class="bg-purple-100 p-3 rounded-xl">
+
+<i class="fa-solid fa-handshake text-purple-600"></i>
+
+</div>
+
+
+<h3 class="font-bold">
+
+Collaboration
+
+</h3>
+
+
+</div>
+
+
+
+<p class="text-sm mt-4">
+
+External collaborations strengthen academic-industry relationships.
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- ================= EXECUTIVE INSIGHTS ================= -->
+
+
+<section class="mt-12">
+
+
+<h2 class="text-3xl font-bold mb-7">
+
+Executive Insights & Feedback
+
+</h2>
+
+
+
+
+
+
+<div class="grid xl:grid-cols-4 md:grid-cols-2 gap-6">
+
+
+
+
+
+
+<div class="insight rounded-3xl p-6">
+
+
+<h3 class="font-bold text-lg mb-3">
+
+📊 Activity Analysis
+
+</h3>
+
+
+<p class="text-sm">
+
+Workshops, seminars, conferences, and guest lectures represent major institutional engagement areas.
+
+</p>
+
+
+<strong class="block mt-4 text-blue-600">
+
+292 Total Activities
+
+</strong>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="insight rounded-3xl p-6">
+
+
+<h3 class="font-bold text-lg mb-3">
+
+🏛 Faculty Performance
+
+</h3>
+
+
+<p class="text-sm">
+
+Faculty participation is distributed across multiple academic units.
+
+</p>
+
+
+<strong class="block mt-4 text-green-600">
+
+10 Faculties
+
+</strong>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="insight rounded-3xl p-6">
+
+
+<h3 class="font-bold text-lg mb-3">
+
+⏳ Pending Actions
+
+</h3>
+
+
+<p class="text-sm">
+
+Submission review and approval tracking should be monitored regularly.
+
+</p>
+
+
+<strong class="block mt-4 text-yellow-600">
+
+41 Pending Records
+
+</strong>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="insight rounded-3xl p-6">
+
+
+<h3 class="font-bold text-lg mb-3">
+
+🏢 Department Insights
+
+</h3>
+
+
+<p class="text-sm">
+
+Department-level analytics provide visibility of institutional participation.
+
+</p>
+
+
+<strong class="block mt-4 text-purple-600">
+
+25 Departments
+
+</strong>
+
+
+</div>
+
+
+
+
+
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+<!-- MANAGEMENT RECOMMENDATION -->
+
+
+<section class="mt-10">
+
+
+<div class="card rounded-3xl p-7">
+
+
+<h2 class="text-2xl font-bold mb-4">
+
+Management Recommendations
+
+</h2>
+
+
+
+
+<ul class="space-y-3 text-slate-600">
+
+
+<li>
+✓ Monitor pending submissions for timely approval.
+</li>
+
+
+<li>
+✓ Encourage balanced participation across faculties.
+</li>
+
+
+<li>
+✓ Maintain updated student and organization records.
+</li>
+
+
+<li>
+✓ Expand industry collaboration opportunities.
+</li>
+
+
+</ul>
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+<script>
+
+Chart.defaults.font.family="Inter";
+Chart.defaults.color="#334155";
+
+function makeChart(id,type,labels,data,extra={}){
+
+new Chart(document.getElementById(id),{
+
+type:type,
+
+data:{
+labels:labels,
+datasets:[{
+label:extra.label || "",
+data:data,
+backgroundColor:extra.colors || "#2563eb",
+borderColor:extra.border || "#2563eb",
+borderWidth:3,
+borderRadius:10,
+fill: extra.fill || false,
+tension:.4
+}]
+},
+
+options:{
+responsive:true,
+maintainAspectRatio:false,
+indexAxis:extra.indexAxis || "x",
+
+plugins:{
+legend:{
+display: extra.legend !== false,
+position:"bottom"
+}
+},
+
+scales:(type==="bar" || type==="line") ? {
+x:{
+ticks:{color:"#334155",font:{weight:"bold"}},
+grid:{color:"#e2e8f0"}
+},
+y:{
+ticks:{color:"#334155",font:{weight:"bold"}},
+grid:{color:"#e2e8f0"}
+}
+}:undefined
+
+}
+
+});
+
+}
+
+
+// Activity
+
+makeChart(
+"activity",
+"doughnut",
+["Workshop","Seminar","Conference","Guest Lecture","Internship","Placement","MoU","Industrial Visit"],
+[56,46,44,45,17,14,17,5],
+{
+colors:["#2563eb","#7c3aed","#06b6d4","#16a34a","#f59e0b","#ef4444","#ec4899","#14b8a6"]
+}
+);
+
+
+// Faculty
+
+makeChart(
+"faculty",
+"bar",
+["Engineering & Technology","Sciences","Management Sciences","Allied Health Sciences","Arts & Architecture","Languages","Information Technology","Social Sciences","Medicine"],
+[10,7,6,6,6,3,2,2,1],
+{
+indexAxis:"y",
+legend:false
+}
+);
+
+
+// Status
+
+makeChart(
+"status",
+"doughnut",
+["Pending","Rejected","Approved"],
+[41,4,1],
+{
+colors:["#f59e0b","#ef4444","#16a34a"]
+}
+);
+
+
+// Department
+
+makeChart(
+"dept",
+"bar",
+["Technology","Economics","Architecture","Physics","Medical Lab","Creative Arts"],
+[9,4,4,3,2,2]
+);
+
+
+// Trend
+
+makeChart(
+"trend",
+"line",
+["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug"],
+[20,45,70,90,130,160,190,220],
+{
+fill:true
+}
+);
+
+
+// Student Organization
+
+makeChart(
+"studentOrganization",
+"bar",
+["UOTH Hospital","Punjab Institute","PKNC","Shaukat Khanum","Other Organizations"],
+[190,55,50,20,102],
+{
+indexAxis:"y",
+legend:false
+}
+);
+
+
+// Training Mode
+
+makeChart(
+"trainingMode",
+"doughnut",
+["Physical","Online","Hybrid"],
+[75,15,10],
+{
+colors:["#2563eb","#16a34a","#f59e0b"]
+}
+);
+
+
+</script>
+
+</body>
+
+</html>
