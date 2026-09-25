@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>UOL Analytics | Alumni Talk / Mentoring</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;color:#0f172a;background:radial-gradient(circle at 0 0,#dbeafe 0,transparent 28%),radial-gradient(circle at 100% 100%,#ede9fe 0,transparent 30%),#f6f8fc}
+.side{position:fixed;left:0;top:0;width:280px;height:100vh;padding:22px 17px;background:linear-gradient(180deg,#020617,#102552 55%,#4c1d95);box-shadow:15px 0 45px #02061733;z-index:10;overflow-y:auto}.nav-link{display:flex;align-items:center;gap:9px;color:#dbeafe;text-decoration:none;font-weight:750;padding:12px 13px;margin:5px 0;border-radius:14px;transition:.2s}.nav-link:hover{background:#ffffff18;transform:translateX(3px)}
+.main{margin-left:300px;padding:28px;min-height:100vh}.hero{position:relative;overflow:hidden;padding:30px;border-radius:28px;color:#fff;background:linear-gradient(135deg,#1d4ed8,#6d28d9 58%,#0891b2);box-shadow:0 24px 55px #2563eb45}.hero:after{content:"";position:absolute;width:330px;height:330px;border-radius:50%;right:-120px;top:-190px;background:#ffffff12}.card{background:#ffffffed;border:1px solid #e2e8f0;border-radius:22px;box-shadow:0 13px 35px #0f172a12}.filter{width:100%;padding:11px 13px;border:1px solid #cbd5e1;border-radius:13px;background:#fff;outline:none}.filter:focus{border-color:#6366f1;box-shadow:0 0 0 4px #6366f11a}.btn{border:0;border-radius:13px;padding:11px 16px;font-weight:850;color:#fff;background:linear-gradient(135deg,#2563eb,#7c3aed);cursor:pointer;box-shadow:0 10px 25px #4f46e538}.btn.alt{background:linear-gradient(135deg,#0f766e,#06b6d4)}.kpi-label{font-size:11px;text-transform:uppercase;letter-spacing:.1em;font-weight:900;color:#64748b}.kpi{margin-top:8px;font-size:36px;line-height:1;font-weight:950;color:#2563eb}.chart{height:320px}.chart-sm{height:270px}thead{background:linear-gradient(135deg,#1d4ed8,#7c3aed);color:#fff}th{padding:13px;text-align:left;white-space:nowrap}td{padding:12px;border-bottom:1px solid #e2e8f0}tbody tr:hover td{background:#eff6ff}.badge{display:inline-flex;padding:5px 9px;border-radius:999px;font-size:11px;font-weight:850}@media(max-width:950px){.side{position:relative;width:100%;height:auto}.main{margin-left:0;padding:18px}}
+
+.nav-link{white-space:normal;line-height:1.35}
+.brand-wrap{padding:10px 12px 18px;margin-bottom:10px;border-bottom:1px solid rgba(255,255,255,.1)}
+.table-wrap{width:100%;overflow:auto;border:1px solid #e2e8f0;border-radius:18px;background:#fff}
+.table-wrap thead{position:sticky;top:0;z-index:2}
+.card{transition:.22s ease}
+.card:hover{transform:translateY(-2px);box-shadow:0 20px 45px rgba(37,99,235,.12)}
+.kpi-card{position:relative;overflow:hidden}
+.kpi-card:after{content:"";position:absolute;width:90px;height:90px;border-radius:50%;right:-35px;top:-35px;background:linear-gradient(135deg,rgba(37,99,235,.08),rgba(124,58,237,.12));pointer-events:none}
+@media(max-width:820px){
+  .side{box-shadow:0 12px 35px rgba(2,6,23,.18)}
+  .connection{width:100%;min-width:0}
+}
+</style>
+</head>
+<body>
+<aside class="side">
+<div class="px-3 mb-7"><div class="text-2xl font-black text-white">🏛 UOL Analytics</div><div class="text-xs text-blue-200 mt-1 uppercase tracking-widest">Performance Intelligence</div></div>
+<a class="nav-link" href="../index.html">📊 Executive Dashboard</a>
+<a class="nav-link" href="workshop.html">🛠 Workshop</a>
+<a class="nav-link" href="seminar.html">🎤 Seminar</a>
+<a class="nav-link" href="conference.html">🎓 Conference</a>
+<a class="nav-link" href="guest.html">👨‍🏫 Guest Lecture</a>
+<a class="nav-link" href="internship.html">💼 Internship</a>
+<a class="nav-link" href="placement.html">🏢 Placement</a>
+<a class="nav-link" href="mou.html">🤝 MoU</a>
+<a class="nav-link" href="glit.html">🎤GLIT</a>
+<a class="nav-link" href="iv.html">🏭 Industrial Visit</a>
+<a class="nav-link" href="others.html">📌 Others</a>
+<a class="nav-link" href="ip.html">💼 IP</a>
+<a class="nav-link" href="iab.html">🤝 IAB Meeting / Industry Consultation</a>
+<a class="nav-link" href="industrial-visit.html">🏭 Industrial Visit</a>
+<a class="nav-link" href="research-collaboration.html">🔬 Research Collaboration</a>
+<a class="nav-link" href="mou-signing.html">🤝 MoU Signing</a>
+<a class="nav-link" href="community.html">🌍 Community Engagement</a>
+<a class="nav-link" href="alumni.html">🎓 Alumni Talk / Mentoring</a>
+<a class="nav-link" href="curriculum-feedback.html">📝 Curriculum Feedback Session</a>
+<a class="nav-link" href="seminar-conference-workshop.html">🎤 Seminar / 🎓 Conference /🛠 Workshop</a>
+<a class="nav-link" href="internship-placement.html">💼Internship/🏢Placement</a>
+
+<div class="mt-8 mx-2 p-4 rounded-2xl bg-white/10 text-blue-100"><div class="text-xs uppercase tracking-widest font-black">Data source</div><div class="text-sm font-bold mt-1">Progress_Report(2).xlsx</div><div id="sideStatus" class="text-xs mt-2 text-blue-200">Connecting…</div></div>
+</aside>
+
+<main class="main">
+<section class="hero mb-7"><div class="relative z-10 flex flex-wrap justify-between items-end gap-5"><div><div class="text-blue-100 text-xs uppercase tracking-[.22em] font-black">University of Lahore</div><h1 class="text-4xl md:text-5xl font-black mt-2">Alumni Talk / Mentoring</h1><p class="text-blue-100 mt-3 max-w-3xl">Records extracted from Section 2 where <b>Activity Type = Alumni Talk / Mentoring</b>.</p></div><div class="bg-white/15 backdrop-blur px-5 py-4 rounded-2xl min-w-[245px]"><div class="text-xs text-blue-100 uppercase font-black">Excel connection</div><div id="connection" class="font-black mt-1">Loading…</div></div></div></section>
+
+<section class="card p-5 mb-7"><div class="flex flex-wrap justify-between items-center gap-3 mb-4"><div><h2 class="font-black text-xl">Alumni Talk / Mentoring Filters</h2><p class="text-slate-500 text-sm mt-1">Only the exact Section 2 activity type is included.</p></div><div class="flex gap-2"><button class="btn alt" onclick="resetFilters()">↺ Reset</button><button class="btn" onclick="exportExcel()">📥 Export Excel</button></div></div>
+<div class="grid md:grid-cols-2 xl:grid-cols-5 gap-3"><select id="faculty" class="filter"><option value="all">All Faculties</option></select><select id="department" class="filter"><option value="all">All Departments</option></select><input id="search" class="filter" placeholder="Search organization / mentor"><select id="planned" class="filter"><option value="all">All Planned Status</option><option value="Yes">Planned: Yes</option><option value="No">Planned: No</option></select><select id="scheduled" class="filter"><option value="all">All Scheduled Status</option><option value="Yes">Scheduled: Yes</option><option value="No">Scheduled: No</option></select></div></section>
+
+<section class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 mb-8"><div class="card kpi-card p-5"><div class="kpi-label">Activity Records</div><div id="records" class="kpi">0</div></div><div class="card kpi-card p-5"><div class="kpi-label">How Many Total</div><div id="total" class="kpi">0</div></div><div class="card kpi-card p-5"><div class="kpi-label">Faculties</div><div id="faculties" class="kpi">0</div></div><div class="card kpi-card p-5"><div class="kpi-label">Departments</div><div id="departments" class="kpi">0</div></div><div class="card kpi-card p-5"><div class="kpi-label">Planned</div><div id="plannedCount" class="kpi">0</div></div><div class="card kpi-card p-5"><div class="kpi-label">Scheduled</div><div id="scheduledCount" class="kpi">0</div></div></section>
+
+<section class="grid xl:grid-cols-3 gap-6 mb-8"><div class="card p-6"><h3 class="font-black text-lg">Planned vs Scheduled</h3><div class="chart-sm"><canvas id="statusChart"></canvas></div></div><div class="card p-6 xl:col-span-2"><h3 class="font-black text-lg">Alumni Activities by Faculty</h3><div class="chart"><canvas id="facultyChart"></canvas></div></div><div class="card p-6 xl:col-span-3"><h3 class="font-black text-lg">Alumni Activities by Department</h3><div class="chart"><canvas id="departmentChart"></canvas></div></div><div class="card p-6 xl:col-span-3"><h3 class="font-black text-lg">Alumni / Mentoring Organizations</h3><div class="chart"><canvas id="organizationChart"></canvas></div></div></section>
+
+<section class="card p-6"><div class="flex flex-wrap justify-between items-center gap-3 mb-4"><div><h2 class="text-2xl font-black">Alumni Talk / Mentoring Register</h2><p class="text-slate-500 text-sm mt-1">Exact Section 2 records from the Excel. Values in <b>How Many</b> are preserved as entered.</p></div><span id="recordCount" class="badge bg-blue-100 text-blue-700">0 records</span></div><div class="table-wrap"><table class="w-full text-sm"><thead><tr><th>Faculty</th><th>Department</th><th>Organization / Mentor</th><th>How Many</th><th>Planned</th><th>Scheduled</th></tr></thead><tbody id="table"></tbody></table></div></section>
+</main>
+
+<script>
+let data=[],filtered=[],charts={};const $=id=>document.getElementById(id);
+function clean(v){if(v===undefined||v===null)return"";let s=String(v).trim();return(!s||s.toLowerCase()==="undefined"||s.toLowerCase()==="null")?"":s}
+function esc(v){return String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;")}
+function get(t,k){let m=String(t||"").match(new RegExp(k+"\\s*:\\s*([^,|\\n]+)","i"));return m?clean(m[1]):""}
+function rowValue(row,target){let e=Object.keys(row).find(k=>k.toLowerCase().trim()===target.toLowerCase().trim());if(e)return clean(row[e]);let p=Object.keys(row).find(k=>k.toLowerCase().includes(target.toLowerCase()));return p?clean(row[p]):""}
+function blocks(t){return String(t||"").split(/\s*\|\s*(?=Activity Type\s*:)/i).map(x=>x.trim()).filter(Boolean)}
+function parse(rows){data=[];rows.forEach(row=>{let key=Object.keys(row).find(k=>k.toLowerCase().includes("section 2")&&k.toLowerCase().includes("activity"));if(!key)return;let faculty=rowValue(row,"Faculty")||"Not Available",department=rowValue(row,"Department")||"Not Available";blocks(row[key]).forEach(block=>{if(get(block,"Activity Type").trim().toLowerCase()!=="alumni talk / mentoring")return;let organization=get(block,"Name Of Organization Planned with")||"Not Available";let rawHow=clean(get(block,"How Many"))||"Not Available";let n=Number(rawHow);data.push({Faculty:faculty,Department:department,Organization:organization,HowMany:rawHow,Value:Number.isFinite(n)?n:0,Planned:get(block,"Planned")||"Not Available",Scheduled:get(block,"Scheduled")||"Not Available"})})});filtered=[...data];createFilters();update()}
+function fill(id,values){let el=$(id);el.innerHTML='<option value="all">All</option>';[...new Set(values.map(clean).filter(Boolean))].sort((a,b)=>a.localeCompare(b)).forEach(v=>{let o=document.createElement("option");o.value=v;o.textContent=v;el.appendChild(o)})}
+function createFilters(){fill("faculty",data.map(x=>x.Faculty));fill("department",data.map(x=>x.Department));["faculty","department","planned","scheduled"].forEach(id=>$(id).addEventListener("change",filter));$("search").addEventListener("input",filter)}
+function filter(){let f=$("faculty").value,d=$("department").value,p=$("planned").value,s=$("scheduled").value,q=$("search").value.toLowerCase().trim();filtered=data.filter(x=>(f==="all"||x.Faculty===f)&&(d==="all"||x.Department===d)&&(p==="all"||x.Planned===p)&&(s==="all"||x.Scheduled===s)&&(!q||x.Organization.toLowerCase().includes(q)||x.Faculty.toLowerCase().includes(q)||x.Department.toLowerCase().includes(q)));update()}
+function resetFilters(){["faculty","department","planned","scheduled"].forEach(id=>$(id).value="all");$("search").value="";filtered=[...data];update()}
+function grouped(key){let o={};filtered.forEach(x=>{let v=clean(x[key])||"Not Available";o[v]=(o[v]||0)+x.Value});return Object.fromEntries(Object.entries(o).sort((a,b)=>b[1]-a[1]))}
+function draw(id,type,obj,label,indexAxis="x"){if(charts[id])charts[id].destroy();charts[id]=new Chart($(id),{type,data:{labels:Object.keys(obj),datasets:[{label,data:Object.values(obj),backgroundColor:["#2563eb","#7c3aed","#06b6d4","#16a34a","#f59e0b","#ef4444","#ec4899","#14b8a6"],borderColor:"#fff",borderWidth:type==="doughnut"?2:1,borderRadius:type==="bar"?8:0}]},options:{responsive:true,maintainAspectRatio:false,indexAxis,plugins:{legend:{display:type==="doughnut",position:"bottom"}},scales:type==="bar"?{x:{beginAtZero:true,ticks:{precision:0}},y:{grid:{color:"#e2e8f0"}}}:{}}})}
+function update(){let p=filtered.filter(x=>x.Planned.toLowerCase()==="yes").length,s=filtered.filter(x=>x.Scheduled.toLowerCase()==="yes").length,total=filtered.reduce((a,x)=>a+x.Value,0);$("records").textContent=filtered.length;$("total").textContent=total;$("faculties").textContent=new Set(filtered.map(x=>x.Faculty)).size;$("departments").textContent=new Set(filtered.map(x=>x.Department)).size;$("plannedCount").textContent=p;$("scheduledCount").textContent=s;draw("statusChart","doughnut",{Planned:p,Scheduled:s},"Status");draw("facultyChart","bar",grouped("Faculty"),"How Many","y");draw("departmentChart","bar",grouped("Department"),"How Many","y");draw("organizationChart","bar",grouped("Organization"),"How Many","y");$("recordCount").textContent=`${filtered.length} records`;$("table").innerHTML=filtered.length?filtered.map(x=>`<tr><td>${esc(x.Faculty)}</td><td>${esc(x.Department)}</td><td class="font-semibold">${esc(x.Organization)}</td><td><span class="badge bg-indigo-100 text-indigo-700">${esc(x.HowMany)}</span></td><td><span class="badge ${x.Planned.toLowerCase()==="yes"?"bg-green-100 text-green-700":"bg-slate-100 text-slate-700"}">${esc(x.Planned)}</span></td><td><span class="badge ${x.Scheduled.toLowerCase()==="yes"?"bg-blue-100 text-blue-700":"bg-slate-100 text-slate-700"}">${esc(x.Scheduled)}</span></td></tr>`).join(""):`<tr><td colspan="6" style="padding:50px 20px;text-align:center;color:#64748b;font-weight:600">No Alumni Talk / Mentoring records match the selected filters.</td></tr>`}
+function exportExcel(){if(!filtered.length){alert("No Alumni Talk / Mentoring records to export.");return}let ws=XLSX.utils.json_to_sheet(filtered.map(x=>({Faculty:x.Faculty,Department:x.Department,Organization:x.Organization,"How Many":x.HowMany,Planned:x.Planned,Scheduled:x.Scheduled}))),wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,"Alumni Talk Mentoring");XLSX.writeFile(wb,"UOL_Alumni_Talk_Mentoring_Filtered.xlsx")}
+async function load(){try{let r=await fetch("../data/Progress_Report(2).xlsx",{cache:"no-store"});if(!r.ok)throw Error("HTTP "+r.status);let b=await r.arrayBuffer(),w=XLSX.read(new Uint8Array(b),{type:"array"}),sheet=w.Sheets["All Submissions"]||w.Sheets[w.SheetNames[0]],rows=XLSX.utils.sheet_to_json(sheet,{defval:""});parse(rows);$("connection").innerHTML='<span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 5px rgba(34,197,94,.16);margin-right:8px"></span> Connected';$("sideStatus").textContent=`${rows.length} submissions • ${data.length} Alumni records`}catch(e){$("connection").textContent="Connection failed";$("sideStatus").textContent="Excel not loaded";alert("Could not load Progress_Report(2).xlsx. Keep it in data/ and use VS Code Live Server.")}}
+load();
+</script>
+</body>
+</html>

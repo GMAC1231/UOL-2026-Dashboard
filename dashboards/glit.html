@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>UOL Analytics | GLIT Dashboard</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+:root{--blue:#2563eb;--blue2:#1d4ed8;--violet:#7c3aed;--cyan:#06b6d4;--nav:#020617;--nav2:#102552;--nav3:#4c1d95;--text:#0f172a;--muted:#64748b;--line:#e2e8f0}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;color:var(--text);font-family:Inter,Segoe UI,Arial,sans-serif;background:radial-gradient(circle at 0 0,rgba(37,99,235,.14),transparent 28%),radial-gradient(circle at 100% 100%,rgba(124,58,237,.12),transparent 30%),linear-gradient(135deg,#f8fafc,#f1f5f9)}
+::-webkit-scrollbar{width:9px;height:9px}::-webkit-scrollbar-thumb{background:linear-gradient(var(--blue),var(--violet));border-radius:20px}::-webkit-scrollbar-track{background:#e2e8f0}
+.side{position:fixed;left:0;top:0;width:290px;height:100vh;padding:19px 14px;background:linear-gradient(180deg,var(--nav),var(--nav2) 55%,var(--nav3));box-shadow:18px 0 50px rgba(2,6,23,.25);z-index:1000;overflow-y:auto}
+.brand{padding:10px 12px 18px;margin-bottom:10px;border-bottom:1px solid rgba(255,255,255,.1)}.brand-title{font-size:23px;font-weight:950;color:#fff;letter-spacing:-.04em}.brand-sub{margin-top:4px;font-size:10px;font-weight:850;letter-spacing:.18em;text-transform:uppercase;color:#93c5fd}
+.nav-link{display:flex;align-items:center;gap:9px;color:#dbeafe;text-decoration:none;font-size:13px;font-weight:750;padding:11px 12px;margin:4px 0;border:1px solid transparent;border-radius:13px;transition:.2s}.nav-link:hover{color:#fff;background:rgba(255,255,255,.1);transform:translateX(3px)}
+.source{margin:22px 4px 4px;padding:14px;border-radius:17px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1)}
+.main{margin-left:310px;padding:28px;min-height:100vh;max-width:1850px}
+.hero{position:relative;overflow:hidden;padding:34px;border-radius:30px;color:#fff;background:linear-gradient(135deg,#0f3fb8,#4f46e5 45%,#7c3aed 70%,#0891b2);box-shadow:0 25px 65px rgba(37,99,235,.3)}.hero:before{content:"";position:absolute;width:430px;height:430px;border-radius:50%;right:-190px;top:-285px;background:rgba(255,255,255,.11)}.hero:after{content:"";position:absolute;width:230px;height:230px;border-radius:50%;right:100px;bottom:-180px;background:rgba(255,255,255,.06)}.hero>*{position:relative;z-index:2}
+.connection{min-width:245px;padding:15px 18px;border-radius:18px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.24);backdrop-filter:blur(14px)}
+.card{background:rgba(255,255,255,.96);border:1px solid rgba(226,232,240,.95);border-radius:24px;box-shadow:0 14px 38px rgba(15,23,42,.08);transition:.22s}.card:hover{transform:translateY(-3px);box-shadow:0 22px 52px rgba(37,99,235,.12);border-color:rgba(147,197,253,.6)}
+.kpi-label{color:var(--muted);font-size:10px;font-weight:900;letter-spacing:.13em;text-transform:uppercase}.kpi{margin-top:9px;color:var(--blue);font-size:37px;line-height:1;font-weight:950;letter-spacing:-.05em}
+.filter{width:100%;min-height:47px;padding:11px 14px;border:1px solid #cbd5e1;border-radius:13px;background:#fff;color:var(--text);outline:none;font-size:13px}.filter:hover{border-color:#94a3b8}.filter:focus{border-color:#6366f1;box-shadow:0 0 0 4px rgba(99,102,241,.1)}
+.btn{min-height:45px;border:0;border-radius:13px;padding:11px 17px;font-weight:850;color:#fff;background:linear-gradient(135deg,var(--blue),var(--violet));box-shadow:0 10px 25px rgba(79,70,229,.22);cursor:pointer;transition:.2s}.btn.secondary{background:linear-gradient(135deg,#0f766e,var(--cyan))}.btn:hover{transform:translateY(-2px);filter:brightness(1.06)}
+.chart-lg{height:340px;position:relative}.chart-md{height:285px;position:relative}
+.table-wrap{width:100%;overflow:auto;border:1px solid var(--line);border-radius:18px;background:#fff}table{width:100%;border-collapse:separate;border-spacing:0}thead{background:linear-gradient(135deg,var(--blue2),var(--violet));color:#fff}th{padding:14px;text-align:left;white-space:nowrap;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.06em}td{padding:13px 14px;border-bottom:1px solid var(--line);vertical-align:middle;font-size:13px}tbody tr:hover td{background:#eff6ff}tbody tr:last-child td{border-bottom:0}
+.badge{display:inline-flex;align-items:center;justify-content:center;min-width:32px;padding:5px 10px;border-radius:999px;font-size:11px;font-weight:850;white-space:nowrap}.status-dot{width:9px;height:9px;border-radius:50%;display:inline-block;margin-right:8px;background:#22c55e;box-shadow:0 0 0 5px rgba(34,197,94,.15)}.empty{padding:50px 20px!important;text-align:center;color:var(--muted);font-weight:600}
+@media(max-width:1100px){.side{width:255px}.main{margin-left:275px;padding:22px}}@media(max-width:820px){.side{position:relative;width:100%;height:auto}.main{margin-left:0;padding:17px}.hero{padding:25px}.chart-lg{height:300px}.chart-md{height:260px}}@media(max-width:600px){.main{padding:12px}.hero{padding:22px;border-radius:22px}.connection{width:100%;min-width:0}.card{border-radius:19px}.kpi{font-size:32px}.chart-lg{height:270px}.chart-md{height:235px}}
+</style>
+</head>
+<body>
+<aside class="side">
+<div class="brand"><div class="brand-title">🏛 UOL Analytics</div><div class="brand-sub">Performance Intelligence</div></div>
+<a class="nav-link" href="../index.html">📊 Executive Dashboard</a>
+<a class="nav-link" href="workshop.html">🛠 Workshop</a>
+<a class="nav-link" href="seminar.html">🎤 Seminar</a>
+<a class="nav-link" href="conference.html">🎓 Conference</a>
+<a class="nav-link" href="guest.html">👨‍🏫 Guest Lecture</a>
+<a class="nav-link" href="internship.html">💼 Internship</a>
+<a class="nav-link" href="placement.html">🏢 Placement</a>
+<a class="nav-link" href="mou.html">🤝 MoU</a>
+<a class="nav-link" href="glit.html">🎤GLIT</a>
+<a class="nav-link" href="iv.html">🏭 Industrial Visit</a>
+<a class="nav-link" href="others.html">📌 Others</a>
+<a class="nav-link" href="ip.html">💼 IP</a>
+<a class="nav-link" href="iab.html">🤝 IAB Meeting / Industry Consultation</a>
+<a class="nav-link" href="industrial-visit.html">🏭 Industrial Visit</a>
+<a class="nav-link" href="research-collaboration.html">🔬 Research Collaboration</a>
+<a class="nav-link" href="mou-signing.html">🤝 MoU Signing</a>
+<a class="nav-link" href="community.html">🌍 Community Engagement</a>
+<a class="nav-link" href="alumni.html">🎓 Alumni Talk / Mentoring</a>
+<a class="nav-link" href="curriculum-feedback.html">📝 Curriculum Feedback Session</a>
+<a class="nav-link" href="seminar-conference-workshop.html">🎤 Seminar / 🎓 Conference /🛠 Workshop</a>
+<a class="nav-link" href="internship-placement.html">💼Internship/🏢Placement</a>
+
+<div class="source text-blue-100"><div class="text-xs uppercase tracking-widest font-black">Data source</div><div class="text-sm font-bold mt-1">Progress Report Excel</div><div id="sideStatus" class="text-xs mt-2 text-blue-200">Connecting…</div></div>
+</aside>
+<main class="main">
+<section class="hero mb-7">
+<div class="hero-content flex flex-wrap justify-between items-end gap-6">
+<div>
+<div class="text-blue-100 text-xs uppercase tracking-[.22em] font-black">University of Lahore</div>
+<h1 class="text-4xl md:text-5xl font-black mt-2">GLIT Intelligence</h1>
+<p class="text-blue-100 mt-3 max-w-3xl">GLIT records extracted directly from the Progress Report Excel workbook.</p>
+</div>
+<div class="connection">
+<div class="text-xs text-blue-100 uppercase font-black">Excel connection</div>
+<div id="connection" class="font-black mt-1">Loading…</div>
+</div>
+</div>
+</section>
+
+<section class="card p-5 mb-7">
+<div class="flex flex-wrap justify-between items-center gap-3 mb-4">
+<div><h2 class="font-black text-xl">GLIT Filters</h2><p class="muted text-sm mt-1">Filter actual GLIT records from Section 2.</p></div>
+<div class="flex gap-2"><button class="btn secondary" onclick="resetFilters()">↺ Reset</button><button class="btn" onclick="exportExcel()">📥 Export Excel</button></div>
+</div>
+<div class="grid md:grid-cols-2 xl:grid-cols-5 gap-3">
+<select id="faculty" class="filter"><option value="all">All Faculties</option></select>
+<select id="department" class="filter"><option value="all">All Departments</option></select>
+<input id="search" class="filter" placeholder="Search GLIT title">
+<select id="planned" class="filter"><option value="all">All Planned Status</option><option value="Yes">Planned: Yes</option><option value="No">Planned: No</option></select>
+<select id="scheduled" class="filter"><option value="all">All Scheduled Status</option><option value="Yes">Scheduled: Yes</option><option value="No">Scheduled: No</option></select>
+</div>
+</section>
+
+<section class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 mb-8">
+<div class="card p-5"><div class="kpi-label">GLIT Records</div><div id="records" class="kpi">0</div></div>
+<div class="card p-5"><div class="kpi-label">GLIT Events</div><div id="events" class="kpi">0</div></div>
+<div class="card p-5"><div class="kpi-label">Faculties</div><div id="faculties" class="kpi">0</div></div>
+<div class="card p-5"><div class="kpi-label">Departments</div><div id="departments" class="kpi">0</div></div>
+<div class="card p-5"><div class="kpi-label">Planned</div><div id="plannedCount" class="kpi">0</div></div>
+<div class="card p-5"><div class="kpi-label">Scheduled</div><div id="scheduledCount" class="kpi">0</div></div>
+</section>
+
+<section class="grid xl:grid-cols-3 gap-6 mb-8">
+<div class="card p-6"><h3 class="font-black text-lg">Planned vs Scheduled</h3><p class="muted text-sm mt-1 mb-3">GLIT status.</p><div class="chart-md"><canvas id="statusChart"></canvas></div></div>
+<div class="card p-6 xl:col-span-2"><h3 class="font-black text-lg">GLIT by Faculty</h3><p class="muted text-sm mt-1 mb-3">Faculty-level contribution.</p><div class="chart-lg"><canvas id="facultyChart"></canvas></div></div>
+<div class="card p-6 xl:col-span-3"><h3 class="font-black text-lg">GLIT by Department</h3><p class="muted text-sm mt-1 mb-3">Department-level distribution.</p><div class="chart-lg"><canvas id="departmentChart"></canvas></div></div>
+<div class="card p-6 xl:col-span-3"><h3 class="font-black text-lg">GLIT Topics / Organizations</h3><p class="muted text-sm mt-1 mb-3">Actual GLIT title and organization values from the workbook.</p><div class="chart-lg"><canvas id="titleChart"></canvas></div></div>
+</section>
+
+<section class="card p-6">
+<div class="flex flex-wrap justify-between items-center gap-3 mb-4">
+<div><h2 class="text-2xl font-black">GLIT Register</h2><p class="muted text-sm mt-1">Source records from the Progress Report workbook.</p></div>
+<span id="recordCount" class="badge bg-blue-100 text-blue-700">0 records</span>
+</div>
+<div class="table-wrap overflow-auto rounded-2xl">
+<table class="w-full text-sm">
+<thead><tr><th>Faculty</th><th>Department</th><th>GLIT</th><th>Events</th><th>Planned</th><th>Scheduled</th></tr></thead>
+<tbody id="table"></tbody>
+</table>
+</div>
+</section>
+</main>
+
+<script>
+let data=[],filtered=[],charts={};
+const $=id=>document.getElementById(id);
+
+function clean(v){
+  if(v===undefined||v===null)return "";
+  const s=String(v).trim();
+  return (!s||/^(undefined|null)$/i.test(s))?"":s;
+}
+function esc(v){
+  return String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;")
+    .replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");
+}
+function get(text,key){
+  const re=new RegExp(key.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+"\\s*:\\s*([^,|\\n]+)","i");
+  const m=String(text||"").match(re);
+  return m?clean(m[1]):"";
+}
+function rowValue(row,name){
+  const keys=Object.keys(row);
+  let k=keys.find(x=>x.trim().toLowerCase()===name.toLowerCase());
+  if(!k) k=keys.find(x=>x.toLowerCase().includes(name.toLowerCase()));
+  return k?clean(row[k]):"";
+}
+
+/* Handles both normal | separators and rows where several activities
+   have been placed in one long cell. */
+function splitBlocks(text){
+  return String(text||"")
+    .replace(/\r/g,"")
+    .split(/\s*\|\s*(?=Activity\s*Type\s*:)/i)
+    .map(x=>x.trim())
+    .filter(Boolean);
+}
+
+function activityText(row){
+  const keys=Object.keys(row);
+  const candidates=keys.filter(k=>{
+    const l=k.toLowerCase();
+    return l.includes("section 2") || l.includes("activity");
+  });
+  for(const k of candidates){
+    const v=clean(row[k]);
+    if(/activity\s*type\s*:/i.test(v)) return v;
+  }
+  // Fallback: search every cell in the row.
+  for(const k of keys){
+    const v=clean(row[k]);
+    if(/activity\s*type\s*:/i.test(v)) return v;
+  }
+  return "";
+}
+
+function parse(rows){
+  data=[];
+  rows.forEach(row=>{
+    const text=activityText(row);
+    if(!text)return;
+
+    const faculty=rowValue(row,"Faculty")||"Not Available";
+    const department=rowValue(row,"Department")||"Not Available";
+
+    splitBlocks(text).forEach(block=>{
+      const type=get(block,"Activity Type").trim().toLowerCase();
+      if(type!=="glit")return;
+
+      const title=get(block,"Name Of Organization Planned with")||"GLIT";
+      const rawHowMany=get(block,"How Many");
+      const events=parseInt(String(rawHowMany).replace(/[^\d]/g,""),10)||1;
+
+      data.push({
+        Faculty:faculty,
+        Department:department,
+        Title:title,
+        Events:events,
+        Planned:get(block,"Planned")||"Not Available",
+        Scheduled:get(block,"Scheduled")||"Not Available"
+      });
+    });
+  });
+
+  filtered=[...data];
+  createFilters();
+  update();
+}
+
+function fill(id,values){
+  const el=$(id);
+  el.innerHTML='<option value="all">All</option>';
+  [...new Set(values.map(clean).filter(Boolean))]
+    .sort((a,b)=>a.localeCompare(b))
+    .forEach(v=>{
+      const o=document.createElement("option");
+      o.value=v;o.textContent=v;el.appendChild(o);
+    });
+}
+function createFilters(){
+  fill("faculty",data.map(x=>x.Faculty));
+  fill("department",data.map(x=>x.Department));
+  ["faculty","department","planned","scheduled"].forEach(id=>$(id).onchange=filter);
+  $("search").oninput=filter;
+}
+function filter(){
+  const f=$("faculty").value,d=$("department").value;
+  const p=$("planned").value,s=$("scheduled").value;
+  const q=$("search").value.toLowerCase().trim();
+
+  filtered=data.filter(x=>
+    (f==="all"||x.Faculty===f)&&
+    (d==="all"||x.Department===d)&&
+    (p==="all"||x.Planned===p)&&
+    (s==="all"||x.Scheduled===s)&&
+    (!q||
+      x.Title.toLowerCase().includes(q)||
+      x.Faculty.toLowerCase().includes(q)||
+      x.Department.toLowerCase().includes(q))
+  );
+  update();
+}
+function resetFilters(){
+  ["faculty","department","planned","scheduled"].forEach(id=>$(id).value="all");
+  $("search").value="";
+  filtered=[...data];
+  update();
+}
+function grouped(key,events=false){
+  const o={};
+  filtered.forEach(x=>{
+    const v=clean(x[key])||"Not Available";
+    o[v]=(o[v]||0)+(events?Number(x.Events||0):1);
+  });
+  return Object.fromEntries(Object.entries(o).sort((a,b)=>b[1]-a[1]));
+}
+function draw(id,type,obj,label,indexAxis="x"){
+  if(charts[id])charts[id].destroy();
+  charts[id]=new Chart($(id),{
+    type,
+    data:{
+      labels:Object.keys(obj),
+      datasets:[{
+        label,
+        data:Object.values(obj),
+        backgroundColor:["#2563eb","#7c3aed","#06b6d4","#16a34a","#f59e0b","#ef4444","#ec4899","#14b8a6","#6366f1","#0ea5e9"],
+        borderColor:"#fff",
+        borderWidth:type==="doughnut"?2:1,
+        borderRadius:type==="bar"?8:0
+      }]
+    },
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      indexAxis,
+      plugins:{legend:{display:type==="doughnut",position:"bottom"}},
+      scales:type==="bar"?{
+        x:{beginAtZero:true,grid:{color:"#e2e8f0"},ticks:{precision:0,color:"#475569"}},
+        y:{grid:{color:"#e2e8f0"},ticks:{color:"#475569"}}
+      }:{}
+    }
+  });
+}
+function update(){
+  const planned=filtered.filter(x=>x.Planned.toLowerCase()==="yes").length;
+  const scheduled=filtered.filter(x=>x.Scheduled.toLowerCase()==="yes").length;
+  const totalEvents=filtered.reduce((a,x)=>a+Number(x.Events||0),0);
+
+  $("records").textContent=filtered.length;
+  $("events").textContent=totalEvents;
+  $("faculties").textContent=new Set(filtered.map(x=>x.Faculty)).size;
+  $("departments").textContent=new Set(filtered.map(x=>x.Department)).size;
+  $("plannedCount").textContent=planned;
+  $("scheduledCount").textContent=scheduled;
+
+  draw("statusChart","doughnut",{Planned:planned,Scheduled:scheduled},"Status");
+  draw("facultyChart","bar",grouped("Faculty",true),"GLIT Events","y");
+  draw("departmentChart","bar",grouped("Department",true),"GLIT Events","y");
+  draw("titleChart","bar",grouped("Title",true),"GLIT Events","y");
+
+  $("recordCount").textContent=`${filtered.length} records`;
+  $("table").innerHTML=filtered.length
+    ? filtered.map(x=>`<tr>
+        <td>${esc(x.Faculty)}</td>
+        <td>${esc(x.Department)}</td>
+        <td><span class="font-semibold">${esc(x.Title)}</span></td>
+        <td><span class="badge bg-indigo-100 text-indigo-700">${x.Events}</span></td>
+        <td><span class="badge ${x.Planned.toLowerCase()==="yes"?"bg-green-100 text-green-700":"bg-slate-100 text-slate-700"}">${esc(x.Planned)}</span></td>
+        <td><span class="badge ${x.Scheduled.toLowerCase()==="yes"?"bg-blue-100 text-blue-700":"bg-slate-100 text-slate-700"}">${esc(x.Scheduled)}</span></td>
+      </tr>`).join("")
+    : `<tr><td colspan="6" class="empty">No GLIT records found.</td></tr>`;
+}
+
+function exportExcel(){
+  if(!filtered.length){alert("There is no GLIT data to export.");return}
+  const ws=XLSX.utils.json_to_sheet(filtered);
+  const wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,ws,"GLIT");
+  XLSX.writeFile(wb,"UOL_GLIT_Filtered_Data.xlsx");
+}
+
+async function load(){
+  const paths=[
+    "../data/Progress Report Excel",
+    "../data/Progress_Report.xlsx",
+    "../data/Progress Report.xlsx",
+    "../data/Progress_Report(1).xlsx"
+  ];
+
+  let response=null,loadedPath="";
+  for(const path of paths){
+    try{
+      const r=await fetch(path,{cache:"no-store"});
+      if(r.ok){response=r;loadedPath=path;break;}
+    }catch(e){}
+  }
+
+  if(!response){
+    $("connection").textContent="Excel not found";
+    $("sideStatus").textContent="Check the data folder";
+    $("table").innerHTML='<tr><td colspan="6" class="empty">Excel file was not found. Put the Progress Report Excel file in the data folder and run the dashboard with VS Code Live Server.</td></tr>';
+    return;
+  }
+
+  try{
+    const b=await response.arrayBuffer();
+    const w=XLSX.read(new Uint8Array(b),{type:"array"});
+    const sheet=w.Sheets["All Submissions"]||w.Sheets[w.SheetNames[0]];
+    if(!sheet)throw Error("No worksheet found.");
+
+    const rows=XLSX.utils.sheet_to_json(sheet,{defval:""});
+    parse(rows);
+
+    $("connection").innerHTML='<span class="status-dot"></span>Connected';
+    $("sideStatus").textContent=`${rows.length} submissions • ${data.length} GLIT records`;
+    console.log("GLIT source:",loadedPath,"Rows:",rows.length,"GLIT:",data.length);
+  }catch(e){
+    console.error(e);
+    $("connection").textContent="Read error";
+    $("sideStatus").textContent=e.message;
+    $("table").innerHTML=`<tr><td colspan="6" class="empty">Excel was found but could not be read: ${esc(e.message)}</td></tr>`;
+  }
+}
+load();
+</script></script>
+</body>
+</html>
